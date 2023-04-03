@@ -1,0 +1,146 @@
+---
+global:
+  openshift: false
+  tlsDisable: false
+injector:
+  enabled: false
+server:
+  image:
+    repository: hashicorp/vault-enterprise
+    tag: 1.12.2-ent
+  dataStorage:
+    enabled: true
+    size: 1Gi
+  auditStorage:
+    enabled: true
+    size: 1Gi
+  authDelegator:
+    enabled: false
+  extraEnvironmentVars:
+    VAULT_CACERT: /vault/userconfig/vault-ha-tls/vault-playground-cert.ca
+    VAULT_TLSCERT: /vault/userconfig/vault-ha-tls/vault-playground-cert.crt
+    VAULT_TLSKEY: /vault/userconfig/vault-ha-tls/vault-playground-cert.key
+    # the license file is mounted as a secret, because the documented way (enterpriseLicense:secretName: vault-ent-license) caused an permission error
+    VAULT_LICENSE_PATH: /vault/license/license.hclic
+
+  volumes:
+    - name: userconfig-vault-ha-tls
+      secret:
+        defaultMode: 420
+        secretName: vault-ha-tls
+
+    - name: hashicorp-vault-license
+      secret:
+        defaultMode: 420
+        secretName: hashicorp-vault-license
+
+  volumeMounts:
+    - mountPath: /vault/userconfig/vault-ha-tls
+      name: userconfig-vault-ha-tls
+      readOnly: true
+
+    - mountPath: /vault/license/
+      name: hashicorp-vault-license
+      readOnly: true
+
+
+
+
+  standalone:
+    enabled: false
+  affinity: |
+    podAntiAffinity:
+      # Choose a soft scheduling preference, because we distribute 3-5 Pods to 3 nodes/zone:
+      # https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#an-example-of-a-pod-that-uses-pod-affinity
+      #
+      # The anti-affinity rule says that we prefer to schedule the Vault server pods (identified by name/instance labels)
+      # in separate zones (topologyKey kubernetes.io/zone).
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: {{ template "vault.name" . }}
+                app.kubernetes.io/instance: "{{ .Release.Name }}"
+                component: server
+            topologyKey: kubernetes.io/zone
+
+
+
+  ha:
+    enabled: true
+    replicas: 3
+    
+    raft:
+      enabled: true
+      setNodeId: true
+      config: >
+        ui = true
+
+
+        listener "tcp" {
+          address = "[::]:8200"
+          cluster_address = "[::]:8201"
+          #tls_disable = 1
+          tls_cert_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.crt"
+          tls_key_file  = "/vault/userconfig/vault-ha-tls/vault-playground-cert.key"
+          tls_client_ca_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.ca"
+        }
+
+
+        # https://www.vaultproject.io/docs/configuration/storage/raft
+
+        storage "raft" {
+          path = "/vault/data"
+          retry_join {
+            leader_api_addr = "https://vault-0.vault-internal:8200"
+            leader_client_cert_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.crt"
+            leader_client_key_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.key"
+            leader_ca_cert_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.ca"
+          }
+          retry_join {
+            leader_api_addr = "https://vault-1.vault-internal:8200"
+            leader_client_cert_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.crt"
+            leader_client_key_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.key"
+            leader_ca_cert_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.ca"
+          }
+          retry_join {
+            leader_api_addr = "https://vault-2.vault-internal:8200"
+            leader_client_cert_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.crt"
+            leader_client_key_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.key"
+            leader_ca_cert_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.ca"
+          }
+
+          
+          autopilot {
+            cleanup_dead_servers = "true"
+            last_contact_threshold = "200ms"
+            last_contact_failure_threshold = "10m"
+            max_trailing_logs = 250000
+            min_quorum = 5
+            server_stabilization_time = "10s"
+          }
+
+        }
+
+
+        # Todo: KMS seal
+
+        # https://learn.hashicorp.com/tutorials/vault/kubernetes-raft-deployment-guide?in=vault/kubernetes#config-example-aws-eks
+
+
+        # Tag Kubernetes pods with labels for service discovery
+
+        # https://www.vaultproject.io/docs/configuration/service-registration/kubernetes
+
+        service_registration "kubernetes" {}
+        telemetry {
+          disable_hostname = true
+          prometheus_retention_time = "12h"
+        }
+
+
+ui:
+  enabled: true
+  externalPort: 8200
+

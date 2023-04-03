@@ -1,0 +1,21 @@
+namespace   = "default"
+kubecontext = "minikube"
+kubeconfig  = "~/.kube/config"
+
+# Vault
+vault-license = ""
+
+
+vault_helm_release_name = "vault"
+vault_service_name      = "vault-internal"
+
+cluster_name = "cluster.local"
+
+prometheus-vault-access-token = ""
+
+
+organizationName       = "TestOrg"
+organizationalUnitName = "Devops"
+commonName             = "vault-internal.svc.cluster.local"
+additionalDomains      = ["vault.cluster.local", "vault-cli.playground.lab", "vault-ui.playground.lab", "vault.default.svc.cluster.local", "vault-0.vault-internal", "vault-1.vault-internal", "vault-2.vault-internal"]
+

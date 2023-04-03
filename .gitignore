@@ -1,0 +1,12 @@
+Vault-Deployment/.terraform.lock.hcl
+Vault-Deployment/.terraform/*
+Vault-Deployment/.terraform/providers/registry.terraform.io/hashicorp/helm/2.7.1/linux_amd64/terraform-provider-helm_v2.7.1_x5
+Vault-Deployment/.terraform/providers/registry.terraform.io/hashicorp/kubernetes/2.15.0/linux_amd64/terraform-provider-kubernetes_v2.15.0_x5
+Vault-Deployment/.terraform/providers/registry.terraform.io/hashicorp/tls/4.0.4/linux_amd64/terraform-provider-tls_v4.0.4_x5
+Vault-Deployment/terraform.tfstate
+Vault-Deployment/terraform.tfstate.backup
+Vault-Deployment/cluster-keys.json
+Vault-Deployment/backup/hosts
+Vault-Deployment/prometheus-token
+cluster-keys.json
+Vault-Deployment/terraform.tfvars
