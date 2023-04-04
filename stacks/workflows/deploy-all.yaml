@@ -1,0 +1,6 @@
+workflows:
+  deploy-all:
+    description: Deploy terraform projects in order
+    steps:
+      - command: terraform deploy vault-deployment
+      - command: terraform deploy vault-provisioning

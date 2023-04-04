@@ -1,0 +1,19 @@
+import: []
+vars:
+  stage: playground
+
+terraform:
+  vars: {}
+
+helmfile:
+  vars: {}
+
+components:
+  terraform:
+    vault-deployment:
+      vars: {}
+
+    vault-provisioning:
+      vars: {}
+
+  helmfile: {}
