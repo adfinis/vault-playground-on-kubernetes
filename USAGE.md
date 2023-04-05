@@ -52,11 +52,12 @@ kubectl patch deployment -n ingress-nginx ingress-nginx-controller --type='json'
 ```
 
 ## 5. Deploy Vault
-Run the following commands to deploy Vault:
+Download Atmos, follow the [instructions](https://atmos.tools/quick-start/install-atmos) upstream.
+
+Run the following commands to deploy the component vault-deployment to the playground stack:
 ```bash
-cd Vault-Deployment
-terraform init
-terraform apply
+atmos terraform plan vault-deployment -s playground
+atmos terraform apply vault-deployment -s playground
 ```
 
 ## 6. Unseal Vault
@@ -130,10 +131,8 @@ Export the Vault token to the environment variable `TF_VAR_VAULT_TOKEN`:
 TF_VAR_VAULT_TOKEN=$(cat cluster-keys.json | jq -r .root_token)\n
 ```
 
-Switch to the `Provisioning/Vault` directory.
-Then run the following commands to provision Vault:
+Run the following commands to deploy the component vault-provisioning to the playground stack:
 ```bash
-terraform init
-terraform apply
+atmos terraform plan vault-provisioning -s playground
+atmos terraform apply vault-provisioning -s playground
 ```
-
