@@ -9,6 +9,7 @@ resource "kubernetes_ingress_v1" "vault-ui-ingress" {
   depends_on = [time_sleep.vault-sleep]
   metadata {
     name = "vault-ui-ingress"
+    namespace = "vault"
     annotations = {
       "nginx.ingress.kubernetes.io/ssl-passthrough" = "true"
       "kubernetes.io/ingress.class"                 = "nginx"
@@ -41,6 +42,7 @@ resource "kubernetes_ingress_v1" "vault-cli-ingress" {
 
   metadata {
     name = "vault-cli-ingress"
+    namespace = "vault"
     annotations = {
       "nginx.ingress.kubernetes.io/ssl-passthrough" = "true"
       "kubernetes.io/ingress.class"                 = "nginx"

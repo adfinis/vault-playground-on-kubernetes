@@ -7,15 +7,18 @@ injector:
 server:
   image:
     repository: hashicorp/vault-enterprise
-    tag: 1.12.2-ent
+    tag: 1.13.1-ent
   dataStorage:
     enabled: true
     size: 1Gi
   auditStorage:
     enabled: true
     size: 1Gi
+  # authDelegator enables a cluster role binding to be attached to the service
+  # account.  This cluster role binding can be used to setup Kubernetes auth
+  # method.  https://www.vaultproject.io/docs/auth/kubernetes.html
   authDelegator:
-    enabled: false
+    enabled: true
   extraEnvironmentVars:
     VAULT_CACERT: /vault/userconfig/vault-ha-tls/vault-playground-cert.ca
     VAULT_TLSCERT: /vault/userconfig/vault-ha-tls/vault-playground-cert.crt

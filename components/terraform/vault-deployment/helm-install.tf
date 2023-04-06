@@ -1,10 +1,8 @@
 
 resource "kubernetes_secret" "vault_licence" {
-  depends_on = [kubernetes_namespace.playground-namespace]
-
   metadata {
     name      = "hashicorp-vault-license"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.vault.metadata[0].name
   }
   type = "Opaque"
 
@@ -20,7 +18,7 @@ resource "helm_release" "vault" {
   repository = "https://helm.releases.hashicorp.com"
   chart      = "vault"
   # version    = var.vault_helm_chart_version
-  namespace = var.namespace
+  namespace = kubernetes_namespace.vault.metadata[0].name
   wait      = false
 
   values = [
@@ -37,7 +35,15 @@ resource "helm_release" "vault" {
   ]
 }
 
-
+resource "helm_release" "vault-secrets-operator" {
+  name       = "vault-secrets-operator"
+  repository = "https://helm.releases.hashicorp.com"
+  chart      = "vault-secrets-operator"
+  create_namespace = true
+  namespace  = "vault-secrets-operator"
+  version    = "0.1.0-beta"
+  wait      = false
+}
 
 
 resource "kubernetes_secret" "prometheus-monitoring-token" {

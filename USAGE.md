@@ -63,10 +63,10 @@ atmos terraform apply vault-deployment -s playground
 ## 6. Unseal Vault
 Run the following commands to unseal Vault:
 ```bash
-kubectl exec -n $VAULT_K8S_NAMESPACE vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > ./cluster-keys.json
-kubectl exec -n $VAULT_K8S_NAMESPACE vault-0 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
-kubectl exec -n $VAULT_K8S_NAMESPACE vault-1 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
-kubectl exec -n $VAULT_K8S_NAMESPACE vault-2 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
+kubectl exec -n vault vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > ./cluster-keys.json
+kubectl exec -n vault vault-0 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
+kubectl exec -n vault vault-1 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
+kubectl exec -n vault vault-2 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
 ```
 ## 7. Login to Vault
 Run the following commands to login to Vault:

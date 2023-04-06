@@ -8,3 +8,11 @@ variable "VAULT_ADDR"{
     default = "https://vault-cli.playground.lab"
     description = "Vault address"
 }
+
+variable "kubecontext" {
+  type = string
+}
+
+variable "kubeconfig" {
+  type = string
+}
