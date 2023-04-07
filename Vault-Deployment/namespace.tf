@@ -16,3 +16,25 @@ resource "kubernetes_namespace" "playground-namespace" {
     name = var.namespace
   }
 }
+
+
+resource "kubernetes_namespace" "vault" {
+  metadata {
+    annotations = {
+      name = "vault"
+    }
+
+    name = "vault"
+  }
+}
+
+
+resource "kubernetes_namespace" "tenant-1" {
+  metadata {
+    annotations = {
+      name = "tenant-1"
+    }
+
+    name = "tenant-1"
+  }
+}

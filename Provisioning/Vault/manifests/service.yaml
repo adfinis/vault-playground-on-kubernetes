@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: tls-app-service
+  namespace: tenant-1
+spec:
+  selector:
+    app: tls-app
+  ports:
+    - port: 443
+      targetPort: 8080

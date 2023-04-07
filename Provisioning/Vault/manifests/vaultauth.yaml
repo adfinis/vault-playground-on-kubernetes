@@ -1,0 +1,22 @@
+apiVersion: secrets.hashicorp.com/v1alpha1
+kind: VaultAuth
+metadata:
+  namespace: tenant-1
+  name: default
+spec:
+  # required configuration
+  # VaultConnectionRef of the corresponding VaultConnection CustomResource.
+  # If no value is specified the Operator will default to the `default` VaultConnection,
+  # configured in its own Kubernetes namespace.
+  vaultConnectionRef: default
+  # Method to use when authenticating to Vault.
+  method: kubernetes
+  # Mount to use when authenticating to auth method.
+  mount: kubernetes
+  # Kubernetes specific auth configuration, requires that the Method be set to kubernetes.
+  kubernetes:
+    # role to use when authenticating to Vault
+    role: default
+    # ServiceAccount to use when authenticating to Vault
+    # it is recommended to always provide a unique serviceAccount per Pod/application
+    serviceAccount: default
