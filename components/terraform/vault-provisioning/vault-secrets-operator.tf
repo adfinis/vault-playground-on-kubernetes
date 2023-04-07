@@ -7,7 +7,6 @@ resource "vault_auth_backend" "kubernetes" {
 resource "vault_kubernetes_auth_backend_config" "kubernetes" {
   backend            = vault_auth_backend.kubernetes.path
   kubernetes_host    = "https://kubernetes.default.svc"
-  issuer             = "https://kubernetes.default.svc.cluster.local"
 }
 
 resource "vault_kubernetes_auth_backend_role" "default" {
