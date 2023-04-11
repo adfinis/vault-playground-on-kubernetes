@@ -5,7 +5,7 @@ This repository provides a playground with bootstrap code to experiment and expl
 The repository currently focuses on integration with the following authentication methods and external systems:
 - AppRole
 - LDAP (OpenLDAP)
-- Kubernetes API 
+- Kubernetes API
 - Monitoring (Prometheus/Grafana)
 
 ## Prerequisites

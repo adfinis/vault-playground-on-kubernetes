@@ -16,5 +16,3 @@ resource "kubernetes_namespace" "playground-namespace" {
     name = var.namespace
   }
 }
-
-

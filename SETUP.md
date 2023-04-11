@@ -133,7 +133,7 @@ Visit the [official documentation](https://learn.hashicorp.com/tutorials/terrafo
 There a few options to create a cluster. If you don't have a cluster yet, you can use one of the following options:
 
 ### Minikube
-Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM, docker container or on your host. It offers the same features as a full Kubernetes cluster, including DNS, NodePorts, ConfigMaps and Dashboards. Along with the cluster, minikube automatically configures kubectl to communicate with the cluster and offers commands to manage the cluster. 
+Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM, docker container or on your host. It offers the same features as a full Kubernetes cluster, including DNS, NodePorts, ConfigMaps and Dashboards. Along with the cluster, minikube automatically configures kubectl to communicate with the cluster and offers commands to manage the cluster.
 
 To install minikube, follow the [official documentation](https://minikube.sigs.k8s.io/docs/start/).
 After installing minikube, you can create a cluster with the following command:
@@ -184,7 +184,7 @@ Kind will automatically configure kubectl to communicate with the cluster and of
 
 If you want to remove the cluster, you can use the following command:
 
-```bash 
+```bash
 kind delete cluster
 ```
 

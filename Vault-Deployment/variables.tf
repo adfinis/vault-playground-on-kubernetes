@@ -56,4 +56,3 @@ variable "additionalDomains" {
   type    = list(string)
   default = []
 }
-
