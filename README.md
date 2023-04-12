@@ -25,6 +25,27 @@ Note:
 
 See [./USAGE.md](./USAGE.md)
 
+## Development and Contributions
+
+If you would like to open a pull request, make sure to initialize the
+[pre-commit hooks](https://pre-commit.com) locally:
+```bash
+# initialize pre-commit
+pre-commit install
+pre-commit install-hooks
+
+# update to latest hooks
+pre-commit autoupdate
+```
+
+To run the actual hooks:
+```bash
+# run pre-commit
+pre-commit run -a
+```
+
+Commit the suggested changes.
+
 ## Code of Conduct
 
 This repository has a [code of conduct](CODE_OF_CONDUCT.md), we will
