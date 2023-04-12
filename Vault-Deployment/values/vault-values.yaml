@@ -24,24 +24,24 @@ server:
     VAULT_LICENSE_PATH: /vault/license/license.hclic
 
   volumes:
-    - name: userconfig-vault-ha-tls
-      secret:
-        defaultMode: 420
-        secretName: vault-ha-tls
+  - name: userconfig-vault-ha-tls
+    secret:
+      defaultMode: 420
+      secretName: vault-ha-tls
 
-    - name: hashicorp-vault-license
-      secret:
-        defaultMode: 420
-        secretName: hashicorp-vault-license
+  - name: hashicorp-vault-license
+    secret:
+      defaultMode: 420
+      secretName: hashicorp-vault-license
 
   volumeMounts:
-    - mountPath: /vault/userconfig/vault-ha-tls
-      name: userconfig-vault-ha-tls
-      readOnly: true
+  - mountPath: /vault/userconfig/vault-ha-tls
+    name: userconfig-vault-ha-tls
+    readOnly: true
 
-    - mountPath: /vault/license/
-      name: hashicorp-vault-license
-      readOnly: true
+  - mountPath: /vault/license/
+    name: hashicorp-vault-license
+    readOnly: true
 
 
 
@@ -70,7 +70,7 @@ server:
   ha:
     enabled: true
     replicas: 3
-    
+
     raft:
       enabled: true
       setNodeId: true
@@ -111,7 +111,7 @@ server:
             leader_ca_cert_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.ca"
           }
 
-          
+
           autopilot {
             cleanup_dead_servers = "true"
             last_contact_threshold = "200ms"
@@ -143,4 +143,3 @@ server:
 ui:
   enabled: true
   externalPort: 8200
-

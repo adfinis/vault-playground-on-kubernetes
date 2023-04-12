@@ -1,3 +1,4 @@
+---
 #
 # IMPORTANT NOTE
 #
@@ -33,10 +34,10 @@ ingress:
   main:
     enabled: true
     hosts:
-      - host: explore.playground.lab
-        paths:
-          - path: /
-            pathType: Prefix
+    - host: explore.playground.lab
+      paths:
+      - path: /
+        pathType: Prefix
 
 securityContext:
   # -- Specify the user ID the application will run as
@@ -50,7 +51,7 @@ securityContext:
 # @default -- See values.yaml
 persistence:
   config:
-    enabled: false 
+    enabled: false
     mountPath: /www/assets
 
 configmap:
@@ -79,7 +80,7 @@ configmap:
 
         # Optional: Proxy / hosting option
         proxy:
-          useCredentials: false # send cookies & authorization headers when fetching service specific data. Set to `true` if you use an authentication proxy. Can be overrided on service level. 
+          useCredentials: false # send cookies & authorization headers when fetching service specific data. Set to `true` if you use an authentication proxy. Can be overrided on service level.
 
         # Set the default layout and color scheme
         defaults:
@@ -181,6 +182,3 @@ configmap:
               - name: "SSL Ldap 2"
                 logo: "http://ssl-ldap2.playground.lab/images/favicon.ico"
                 url: "http://ssl-ldap2.playground.lab"
-
-
-       

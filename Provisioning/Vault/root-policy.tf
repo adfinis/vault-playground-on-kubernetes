@@ -8,4 +8,3 @@ resource "vault_policy" "root-policies-policy" {
   name     = split(".", basename(each.value))[0]
   policy   = file(each.value)
 }
-

@@ -18,4 +18,3 @@ organizationName       = "TestOrg"
 organizationalUnitName = "Devops"
 commonName             = "vault-internal.svc.cluster.local"
 additionalDomains      = ["vault.cluster.local", "vault-cli.playground.lab", "vault-ui.playground.lab", "vault.default.svc.cluster.local", "vault-0.vault-internal", "vault-1.vault-internal", "vault-2.vault-internal"]
-

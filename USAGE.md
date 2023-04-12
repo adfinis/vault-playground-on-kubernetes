@@ -86,7 +86,7 @@ vault login $VAULT_TOKEN
 The Vault /sys/metrics endpoint is authenticated. Prometheus requires a Vault token with sufficient capabilities to successfully consume metrics from the endpoint.
 
 Define a prometheus-metrics ACL policy that grants read capabilities to the metrics endpoint.
-    
+
 ```bash
 vault policy write prometheus-metrics - << EOF
 path "/sys/metrics" {
@@ -136,4 +136,3 @@ Then run the following commands to provision Vault:
 terraform init
 terraform apply
 ```
-

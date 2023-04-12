@@ -61,7 +61,7 @@ resource "helm_release" "prometheus-grafana" {
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
   namespace  = var.namespace
-  version = "44.2.1"
+  version    = "44.2.1"
 
   values = [
     file("./values/kube-prometheus-stack-values.yaml")
@@ -120,4 +120,3 @@ resource "helm_release" "homer" {
   ]
 
 }
-
