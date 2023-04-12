@@ -7,7 +7,7 @@ injector:
 server:
   image:
     repository: hashicorp/vault-enterprise
-    tag: 1.12.2-ent
+    tag: 1.13.1-ent
   dataStorage:
     enabled: true
     size: 1Gi
