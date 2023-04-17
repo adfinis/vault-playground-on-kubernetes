@@ -26,7 +26,7 @@ add_ingress_to_hosts "vault-ui-ingress" "vault" "vault-ui.playground.lab"
 add_ingress_to_hosts "vault-cli-ingress" "vault" "vault-cli.playground.lab"
 add_ingress_to_hosts "prometheus-ingress" "$VAULT_K8S_NAMESPACE" "prometheus.playground.lab"
 add_ingress_to_hosts "grafana-ingress" "$VAULT_K8S_NAMESPACE" "grafana.playground.lab"
-add_ingress_to_hosts "openldap-stack-ha-ltb-passwd" "$VAULT_K8S_NAMESPACE"  "ssl-ldap2.playground.lab"
+add_ingress_to_hosts "openldap-stack-ha-ltb-passwd" "$VAULT_K8S_NAMESPACE" "ssl-ldap2.playground.lab"
 add_ingress_to_hosts "openldap-stack-ha-phpldapadmin" "$VAULT_K8S_NAMESPACE" "phpldapadmin.playground.lab"
 add_ingress_to_hosts "homer" "$VAULT_K8S_NAMESPACE" "explore.playground.lab"
 
