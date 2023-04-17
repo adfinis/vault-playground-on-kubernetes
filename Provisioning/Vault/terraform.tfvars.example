@@ -1,0 +1,2 @@
+kubecontext = "minikube"
+kubeconfig  = "~/.kube/config"
