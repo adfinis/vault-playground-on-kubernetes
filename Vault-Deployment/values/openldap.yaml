@@ -92,14 +92,14 @@ service:
 # Use the env variables from https://hub.docker.com/r/bitnami/openldap/
 # Be careful, do not modify the following values unless you know exactly what your are doing
 env:
-  BITNAMI_DEBUG: 'true'
-  LDAP_LOGLEVEL: '256'
-  LDAP_TLS_ENFORCE: 'false'
-  LDAPTLS_REQCERT: never
-  LDAP_ENABLE_TLS: yes
-  LDAP_CONFIG_ADMIN_ENABLED: yes
-  LDAP_CONFIG_ADMIN_USERNAME: admin
-  LDAP_SKIP_DEFAULT_TREE: no
+  BITNAMI_DEBUG: "true"
+  LDAP_LOGLEVEL: "256"
+  LDAP_TLS_ENFORCE: "false"
+  LDAPTLS_REQCERT: "never"
+  LDAP_ENABLE_TLS: "yes"
+  LDAP_CONFIG_ADMIN_ENABLED: "yes"
+  LDAP_CONFIG_ADMIN_USERNAME: "admin"
+  LDAP_SKIP_DEFAULT_TREE: "no"
 
 # Pod Disruption Budget for Stateful Set
 # Disabled by default, to ensure backwards compatibility
