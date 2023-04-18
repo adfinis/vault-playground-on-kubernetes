@@ -15,7 +15,7 @@ resource "tls_self_signed_cert" "vault" {
   validity_period_hours = 1680
 
   ip_addresses = ["127.0.0.1"]
-  dns_names    = concat(["localhost", "vault", "${var.vault_service_name}", "${var.vault_service_name}.${var.vault_helm_release_name}.svc.${var.cluster_name}", "${var.vault_service_name}.${var.namespace}.svc.${var.cluster_name}", "${var.vault_helm_release_name}"], var.additionalDomains)
+  dns_names    = concat(["localhost", "vault", "${var.vault_service_name}", "${var.vault_service_name}.${var.vault_helm_release_name}.svc.${var.cluster_name}", "${var.vault_service_name}.vault.svc.${var.cluster_name}", "${var.vault_helm_release_name}"], var.additionalDomains)
 
 
   allowed_uses = [
@@ -32,7 +32,7 @@ resource "kubernetes_secret" "vault_certs" {
   depends_on = [kubernetes_namespace.playground-namespace]
   metadata {
     name      = "vault-ha-tls"
-    namespace = var.namespace
+    namespace = "vault"
   }
   type = "Opaque"
 
