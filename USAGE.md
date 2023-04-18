@@ -28,12 +28,10 @@ kubectl patch deployment -n ingress-nginx ingress-nginx-controller --type='json'
 ### 4.2. Kind
 [Deploy Metallb](https://kind.sigs.k8s.io/docs/user/loadbalancer) to use an IP in the Docker network (below assumes range `172.19.255.200 - 172.19.255.250`) for load balancing purposes:
 
-
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/main/config/manifests/metallb-native.yaml
 kubectl apply -f https://kind.sigs.k8s.io/examples/loadbalancer/metallb-config.yaml
 ```
-
 
 Deploy Nginx Ingress and patch it to enable ssl passthrough:
 
@@ -127,7 +125,7 @@ Go to http://explore.playground.lab/ to get an overview over all applications.
 
 Export the Vault token to the environment variable `TF_VAR_VAULT_TOKEN`:
 ```bash
-TF_VAR_VAULT_TOKEN=$(cat cluster-keys.json | jq -r .root_token)\n
+export TF_VAR_VAULT_TOKEN=$(cat cluster-keys.json | jq -r .root_token)
 ```
 
 Switch to the `Provisioning/Vault` directory.
