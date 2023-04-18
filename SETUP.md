@@ -159,7 +159,7 @@ To install kind, follow the [official documentation](https://kind.sigs.k8s.io/do
 
 Create the cluster with the [custom node label and extra port mapping for the Ingress](https://kind.sigs.k8s.io/docs/user/ingress):
 ```bash
-cat <<EOF | kind create cluster --config=-
+cat <<EOF | kind create cluster --name vault-playground --config=-
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
@@ -180,13 +180,12 @@ nodes:
 EOF
 ```
 
-Kind will automatically configure kubectl to communicate with the cluster and offers commands to manage the cluster under the context `kind-kind`.
+Kind will automatically configure kubectl to communicate with the cluster and offers commands to manage the cluster under the context `kind-vault-playground`.
 
 If you want to remove the cluster, you can use the following command:
 
 ```bash
-kind delete cluster
+kind delete cluster vault-playground
 ```
 
-
-https://kind.sigs.k8s.io/docs/user/quick-start/
+https://kind.sigs.k8s.io/docs/user/quick-start
