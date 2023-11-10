@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # function that takes kubernetes ingress name and domain name and ands it to /etc/hosts
 
