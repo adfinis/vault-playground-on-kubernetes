@@ -1,0 +1,28 @@
+---
+# https://cert-manager.io/docs/usage/ingress/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    # add an annotation indicating the issuer to use.
+    cert-manager.io/cluster-issuer: vault-acme-issuer
+  name: cert-manager-demo
+  namespace: cert-manager-demo
+spec:
+  # this needs to match the configured http "solver" in the ClusterIssuer
+  ingressClassName: nginx
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: static-server
+            port:
+              number: 8080
+  tls:
+  - secretName: cert-manager-demo-cert # < cert-manager will store the created certificate in this secret.
+    # placing a host in the TLS config will determine what ends up in the cert's subjectAltNames
+    hosts: []
