@@ -11,8 +11,9 @@ resource "kubernetes_ingress_v1" "vault-ui-ingress" {
     name = "vault-ui-ingress"
     namespace = "vault"
     annotations = {
-      "nginx.ingress.kubernetes.io/ssl-passthrough" = "true"
-      "kubernetes.io/ingress.class"                 = "nginx"
+      "nginx.ingress.kubernetes.io/ssl-passthrough"  = "true"
+      "kubernetes.io/ingress.class"                  = "nginx"
+      "nginx.ingress.kubernetes.io/backend-protocol" = "HTTPS"
     }
   }
   spec {
@@ -44,8 +45,9 @@ resource "kubernetes_ingress_v1" "vault-cli-ingress" {
     name = "vault-cli-ingress"
     namespace = "vault"
     annotations = {
-      "nginx.ingress.kubernetes.io/ssl-passthrough" = "true"
-      "kubernetes.io/ingress.class"                 = "nginx"
+      "nginx.ingress.kubernetes.io/ssl-passthrough"  = "true"
+      "kubernetes.io/ingress.class"                  = "nginx"
+      "nginx.ingress.kubernetes.io/backend-protocol" = "HTTPS"
     }
   }
   spec {
