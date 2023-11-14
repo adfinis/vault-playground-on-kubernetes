@@ -38,3 +38,13 @@ resource "kubernetes_namespace" "tenant-1" {
     name = "tenant-1"
   }
 }
+
+resource "kubernetes_namespace" "cert-manager-demo" {
+  metadata {
+    annotations = {
+      name = "cert-manager-demo"
+    }
+
+    name = "cert-manager-demo"
+  }
+}
