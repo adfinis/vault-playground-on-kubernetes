@@ -1,13 +1,18 @@
 # Vault ACME Cert Manager Demo
 
-The `Provisioning/Vault` scripts deploy a [http echo service](https://hub.docker.com/r/hashicorp/http-echo/) to the
+The `Provisioning/Vault` scripts deploy a [http echo
+service](https://hub.docker.com/r/hashicorp/http-echo/) to the
 `cert-manager-demo` namespace.
 
-The sample extends the echo service provided in [learn-consul-kubernetes](https://github.com/hashicorp/learn-consul-kubernetes/blob/main/mesh-gateways/dc2/static-server.yaml).
+The sample extends the echo service provided in
+[learn-consul-kubernetes](https://github.com/hashicorp/learn-consul-kubernetes/blob/main/mesh-gateways/dc2/static-server.yaml).
 
-An example Ingress is used to showcase the capabilities of the following components:
-* Vault [PKI as ACME server](https://developer.hashicorp.com/vault/api-docs/secret/pki#acme-certificate-issuance)
-* Cert manager with [annotaded Ingress resource](https://cert-manager.io/docs/usage/ingress/)
+An example Ingress is used to showcase the capabilities of the following
+components:
+* Vault [PKI as ACME
+  server](https://developer.hashicorp.com/vault/api-docs/secret/pki#acme-certificate-issuance)
+* Cert manager with [annotaded Ingress
+  resource](https://cert-manager.io/docs/usage/ingress/)
 
 ## Test for Correctness
 
@@ -28,4 +33,5 @@ kubectl describe certificaterequest cert-manager-demo-cert-1 -n cert-manager-dem
 kubectl describe certificate -n cert-manager-demo
 ```
 
-Also, have a look at the [troubleshooting documentation](https://cert-manager.io/docs/troubleshooting) upstream.
+Also, have a look at the [troubleshooting
+documentation](https://cert-manager.io/docs/troubleshooting) upstream.
