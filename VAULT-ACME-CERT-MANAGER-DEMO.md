@@ -18,7 +18,7 @@ components:
 
 To test that the cert-manager issued the certificate:
 ```bash
-curl -v -k --resolve example.com:443:192.168.39.94 https://example.com
+curl -v -k --resolve example.com:443:192.168.39.145 https://example.com
 openssl s_client -connect 192.168.39.145:443 -servername example.com | openssl x509 -noout -text
 ```
 
