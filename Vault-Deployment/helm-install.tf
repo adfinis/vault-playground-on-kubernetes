@@ -126,3 +126,17 @@ resource "helm_release" "homer" {
   ]
 
 }
+
+resource "helm_release" "cert-manager" {
+  name       = "cert-manager"
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
+  namespace  = "cert-manager"
+  create_namespace = true
+  wait       = false
+  version    = "1.13.2"
+
+  values = [
+    file("./values/cert-manager.yaml")
+  ]
+}

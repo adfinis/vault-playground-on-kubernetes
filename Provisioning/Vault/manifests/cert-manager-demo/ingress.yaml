@@ -1,0 +1,41 @@
+---
+# https://cert-manager.io/docs/usage/ingress/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    # add an annotation indicating the issuer to use.
+    cert-manager.io/cluster-issuer: vault-acme-issuer
+    # With Vault as a server and Nginx Ingress with passthrough enabled, was
+    # stuck at the temporaray/opaque secret (with random suffix) when not
+    # setting this annotation
+    # - https://cert-manager.io/docs/concepts/certificate/#certificate-lifecycle
+    # - https://cert-manager.io/docs/troubleshooting/acme/#http01-troubleshooting
+    # - https://cert-manager.io/docs/usage/ingress/#supported-annotations
+    # There may be an issue with your ingress controller handling multiple
+    # resources for the same hostname
+    #
+    # NAME                        CLASS   HOSTS         ADDRESS         PORTS     AGE
+    # cert-manager-demo           nginx   example.com   192.168.39.94   80, 443   4m21s
+    # cm-acme-http-solver-xrt22   nginx   example.com   192.168.39.94   80        84s
+    acme.cert-manager.io/http01-edit-in-place: "true"
+  name: cert-manager-demo
+  namespace: cert-manager-demo
+spec:
+  # this needs to match the configured http "solver" in the ClusterIssuer
+  ingressClassName: nginx
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: static-server
+            port:
+              number: 8080
+  tls: # < placing a host in the TLS config will determine what ends up in the cert's subjectAltNames
+  - hosts:
+    - example.com
+    secretName: cert-manager-demo-cert # < cert-manager will store the created certificate in this secret.

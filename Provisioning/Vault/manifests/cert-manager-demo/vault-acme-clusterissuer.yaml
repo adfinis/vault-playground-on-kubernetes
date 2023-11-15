@@ -1,0 +1,18 @@
+---
+# https://cert-manager.io/docs/configuration/acme/http01/
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: vault-acme-issuer
+  # the cluster issuer is cluster scoped, no namespace required
+  # https://cert-manager.io/docs/configuration
+spec:
+  acme:
+    server: https://vault.vault.svc.cluster.local:8200/v1/pki/acme/directory
+    skipTLSVerify: true
+    privateKeySecretRef:
+      name: vault-acme-issuer-account-key
+    solvers:
+    - http01:
+        ingress:
+          ingressClassName: nginx
