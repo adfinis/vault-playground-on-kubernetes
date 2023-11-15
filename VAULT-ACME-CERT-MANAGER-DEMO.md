@@ -18,8 +18,8 @@ components:
 
 To test that the cert-manager issued the certificate:
 ```bash
-curl -k  --resolve example.com:443:192.168.39.145 https://example.com
-openssl s_client -connect 192.168.39.145:443 | openssl x509 -noout -text
+curl -v -k --resolve example.com:443:192.168.39.94 https://example.com
+openssl s_client -connect 192.168.39.145:443 -servername example.com | openssl x509 -noout -text
 ```
 
 This assumes the IP of the Ingress is `192.168.39.145`.
@@ -34,4 +34,7 @@ kubectl describe certificate -n cert-manager-demo
 ```
 
 Also, have a look at the [troubleshooting
-documentation](https://cert-manager.io/docs/troubleshooting) upstream.
+documentation](https://cert-manager.io/docs/troubleshooting) and the
+[certificate
+lifecycle](https://cert-manager.io/docs/concepts/certificate/#certificate-lifecycle)
+upstream.
