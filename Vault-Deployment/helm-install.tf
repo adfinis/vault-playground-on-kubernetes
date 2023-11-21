@@ -41,7 +41,7 @@ resource "helm_release" "vault-secrets-operator" {
   chart      = "vault-secrets-operator"
   create_namespace = true
   namespace  = "vault-secrets-operator"
-  version    = "0.1.0-beta"
+  version    = "0.4.0"
   wait      = false
 }
 
