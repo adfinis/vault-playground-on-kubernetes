@@ -6,6 +6,7 @@ locals {
 }
 
 resource "kubernetes_manifest" "vault-cert-manager-demo" {
+  computed_fields = ["spec.rules", ]
   for_each = local.manifests
   manifest = yamldecode(file("./manifests/cert-manager-demo/${each.value}"))
 }
