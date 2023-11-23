@@ -1,4 +1,4 @@
-apiVersion: secrets.hashicorp.com/v1alpha1
+apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultConnection
 metadata:
   namespace: tenant-1
