@@ -1,0 +1,25 @@
+---
+mode: "deployment"
+replicaCount: 1
+config:
+  receivers:
+    tcplog:
+      listen_address: "0.0.0.0:54525"
+  exporters:
+    loki:
+      endpoint: "http://loki.loki.svc.cluster.local:3100/loki/api/v1/push"
+      headers:
+      # Send everything to the vault-audit tenant_id
+      # https://grafana.com/docs/loki/latest/operations/multi-tenancy
+        "X-Scope-OrgID": vault-audit
+  service:
+    pipelines:
+      logs:
+        receivers: [tcplog]
+        exporters: [loki]
+ports:
+  tcplog:
+    enabled: true
+    containerPort: 54525
+    servicePort: 54525
+    protocol: TCP

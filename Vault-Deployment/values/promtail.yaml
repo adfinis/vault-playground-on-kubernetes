@@ -1,0 +1,6 @@
+config:
+  clients:
+    - url: http://loki.loki.svc.cluster.local:3100/loki/api/v1/push
+      # Send everything to the promtail tenant_id
+      # https://grafana.com/docs/loki/latest/operations/multi-tenancy
+      tenant_id: promtail
