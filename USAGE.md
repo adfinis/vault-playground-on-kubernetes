@@ -20,11 +20,9 @@ export VAULT_K8S_NAMESPACE=<your namespace>
 ### 4.1. Minikube
 Run the following commands to enable ingress:
 ```bash
-
 minikube addons enable ingress
-
-kubectl patch deployment -n ingress-nginx ingress-nginx-controller --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value":"--enable-ssl-passthrough"}]'
 ```
+
 ### 4.2. Kind
 [Deploy Metallb](https://kind.sigs.k8s.io/docs/user/loadbalancer) to use an IP in the Docker network (below assumes range `172.19.255.200 - 172.19.255.250`) for load balancing purposes:
 
@@ -44,12 +42,15 @@ kubectl patch svc -n ingress-nginx ingress-nginx-controller --type='json' -p='[{
 
 # remove --publish-status-address=localhost, don't set loadbalancer status to localhost (will use IP of ingress)
 kubectl patch deployment -n ingress-nginx ingress-nginx-controller --type='json' -p='[{"op": "remove", "path": "/spec/template/spec/containers/0/args/9"}]'
+```
 
+## 5. Enable SSL passthrough
+```bash
 # enable ssl passthrough
 kubectl patch deployment -n ingress-nginx ingress-nginx-controller --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value":"--enable-ssl-passthrough"}]'
 ```
 
-## 5. Deploy Vault
+## 6. Deploy Vault
 Run the following commands to deploy Vault:
 ```bash
 cd Vault-Deployment
@@ -57,7 +58,7 @@ terraform init
 terraform apply
 ```
 
-## 6. Unseal Vault
+## 7. Unseal Vault
 Run the following commands to unseal Vault:
 ```bash
 kubectl exec -n vault vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > ./cluster-keys.json
@@ -65,7 +66,7 @@ kubectl exec -n vault vault-0 -- vault operator unseal $(cat ./cluster-keys.json
 kubectl exec -n vault vault-1 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
 kubectl exec -n vault vault-2 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
 ```
-## 7. Login to Vault
+## 8. Login to Vault
 Run the following commands to login to Vault:
 ```bash
 ./add-to-hosts.sh
@@ -79,7 +80,7 @@ export VAULT_SKIP_VERIFY=true
 vault login $VAULT_TOKEN
 ```
 
-## 8. Create token for Prometheus
+## 9. Create token for Prometheus
 
 The Vault /sys/metrics endpoint is authenticated. Prometheus requires a Vault token with sufficient capabilities to successfully consume metrics from the endpoint.
 
@@ -117,11 +118,11 @@ Now restart the Prometheus pod to pick up the new token.
 kubectl delete pod prometheus-kube-stack-prometheus-kube-prometheus-0
 ```
 
-## 9. Access Playground
+## 10. Access Playground
 
 Go to http://explore.playground.lab/ to get an overview over all applications.
 
-## 10. Provisioning Vault
+## 11. Provisioning Vault
 
 Export the Vault token to the environment variable `TF_VAR_VAULT_TOKEN`:
 ```bash
