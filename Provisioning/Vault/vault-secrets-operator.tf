@@ -49,21 +49,21 @@ resource "vault_pki_secret_backend_role" "role" {
 # This is an example for a workload agnhost fetching a TLS certificate from Vault
 # https://raw.githubusercontent.com/hashicorp/vault-secrets-operator/main/config/samples/secrets_v1alpha1_vaultpkisecret_tls.yaml
 resource "kubernetes_manifest" "vaultpkisecret" {
-  manifest = yamldecode(file("./manifests/vaultpkisecret.yaml"))
+  manifest = yamldecode(file("./manifests/vault-secrets-operator/vaultpkisecret.yaml"))
 }
 resource "kubernetes_manifest" "pod" {
-  manifest = yamldecode(file("./manifests/pod.yaml"))
+  manifest = yamldecode(file("./manifests/vault-secrets-operator/pod.yaml"))
 }
 resource "kubernetes_manifest" "service" {
-  manifest = yamldecode(file("./manifests/service.yaml"))
+  manifest = yamldecode(file("./manifests/vault-secrets-operator/service.yaml"))
 }
 resource "kubernetes_manifest" "ingress" {
-  manifest = yamldecode(file("./manifests/ingress.yaml"))
+  manifest = yamldecode(file("./manifests/vault-secrets-operator/ingress.yaml"))
 }
 resource "kubernetes_manifest" "vaultconnection" {
-  manifest = yamldecode(file("./manifests/vaultconnection.yaml"))
+  manifest = yamldecode(file("./manifests/vault-secrets-operator/vaultconnection.yaml"))
 }
 resource "kubernetes_manifest" "vaultauth" {
-  manifest = yamldecode(file("./manifests/vaultauth.yaml"))
+  manifest = yamldecode(file("./manifests/vault-secrets-operator/vaultauth.yaml"))
 }
 
