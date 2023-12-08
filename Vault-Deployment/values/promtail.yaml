@@ -12,12 +12,8 @@ config:
     - match:
         # https://support.hashicorp.com/hc/en-us/articles/360000995548-Audit-and-Operational-Log-Details
         # https://grafana.com/docs/loki/latest/send-data/promtail/stages/match
-        # Drop anything that does not start with a timestamp
-        #selector: '{app="vault" |~ ̣"^{.*"}'
+        # Drop anything that starts with a timestamp
         selector: '{app="vault"}'
         stages:
         - drop:
             expression: '{\\"time.*'
-      # Remove all vault server and audit log lines
-      #action: drop
-      #drop_counter_reason: vault_audit_match
