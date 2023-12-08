@@ -63,15 +63,13 @@ Run the following commands to unseal Vault:
 ```bash
 kubectl exec -n vault vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > ./cluster-keys.json
 kubectl exec -n vault vault-0 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
-kubectl exec -n vault vault-1 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
-kubectl exec -n vault vault-2 -- vault operator unseal $(cat ./cluster-keys.json | jq -r ".unseal_keys_b64[]")
 ```
 ## 8. Login to Vault
 Run the following commands to login to Vault:
 ```bash
 ./add-to-hosts.sh
 
-export VAULT_ADDR=https://vault-cli.playground.lab
+export VAULT_ADDR=https://vault.playground.lab
 
 export VAULT_TOKEN=$(cat cluster-keys.json | jq -r .root_token)
 

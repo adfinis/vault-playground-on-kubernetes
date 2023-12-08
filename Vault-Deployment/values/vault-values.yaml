@@ -11,9 +11,7 @@ server:
   dataStorage:
     enabled: true
     size: 1Gi
-  auditStorage:
-    enabled: true
-    size: 1Gi
+
   # authDelegator enables a cluster role binding to be attached to the service
   # account.  This cluster role binding can be used to setup Kubernetes auth
   # method.  https://www.vaultproject.io/docs/auth/kubernetes.html
@@ -46,53 +44,37 @@ server:
     name: hashicorp-vault-license
     readOnly: true
 
-
-
-
-  standalone:
-    enabled: false
-  affinity: |
-    podAntiAffinity:
-      # Choose a soft scheduling preference, because we distribute 3-5 Pods to 3 nodes/zone:
-      # https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#an-example-of-a-pod-that-uses-pod-affinity
-      #
-      # The anti-affinity rule says that we prefer to schedule the Vault server pods (identified by name/instance labels)
-      # in separate zones (topologyKey kubernetes.io/zone).
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/name: {{ template "vault.name" . }}
-                app.kubernetes.io/instance: "{{ .Release.Name }}"
-                component: server
-            topologyKey: kubernetes.io/zone
-
-
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    ingressClassName: "nginx"
+    pathType: Prefix
+    activeService: true
+    hosts:
+      - host: vault.playground.lab
+        paths: []
 
   ha:
     enabled: true
-    replicas: 3
+    # can be scaled to 3
+    replicas: 1
 
     raft:
       enabled: true
       setNodeId: true
-      config: >
+      config: |
         ui = true
-
 
         listener "tcp" {
           address = "[::]:8200"
           cluster_address = "[::]:8201"
-          #tls_disable = 1
           tls_cert_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.crt"
           tls_key_file  = "/vault/userconfig/vault-ha-tls/vault-playground-cert.key"
           tls_client_ca_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.ca"
         }
 
-
         # https://www.vaultproject.io/docs/configuration/storage/raft
-
         storage "raft" {
           path = "/vault/data"
           retry_join {
@@ -102,35 +84,13 @@ server:
             leader_client_key_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.key"
             leader_ca_cert_file = "/vault/userconfig/vault-ha-tls/vault-playground-cert.ca"
           }
-
-          autopilot {
-            cleanup_dead_servers = "true"
-            last_contact_threshold = "200ms"
-            last_contact_failure_threshold = "10m"
-            max_trailing_logs = 250000
-            min_quorum = 5
-            server_stabilization_time = "10s"
-          }
-
         }
 
-
-        # Todo: KMS seal
-
-        # https://learn.hashicorp.com/tutorials/vault/kubernetes-raft-deployment-guide?in=vault/kubernetes#config-example-aws-eks
-
-
         # Tag Kubernetes pods with labels for service discovery
-
         # https://www.vaultproject.io/docs/configuration/service-registration/kubernetes
-
         service_registration "kubernetes" {}
+
         telemetry {
           disable_hostname = true
           prometheus_retention_time = "12h"
         }
-
-
-ui:
-  enabled: true
-  externalPort: 8200

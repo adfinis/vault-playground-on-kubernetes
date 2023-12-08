@@ -5,7 +5,7 @@ variable "VAULT_TOKEN" {
 
 variable "VAULT_ADDR"{
     type = string
-    default = "https://vault-cli.playground.lab"
+    default = "https://vault.playground.lab"
     description = "Vault address"
 }
 
