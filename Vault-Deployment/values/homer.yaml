@@ -157,7 +157,7 @@ configmap:
             # logo: "path/to/logo"
             items:
               - name: "Vault UI"
-                logo: "https://www.svgrepo.com/show/448679/vault.svg"
+                logo: "https://raw.githubusercontent.com/hashicorp/vault/main/ui/public/vault-logo.svg"
                 # Alternatively a fa icon can be provided:
                 # icon: "fab fa-jenkins"
                 # subtitle: "Bookmark example"
