@@ -56,3 +56,13 @@ variable "additionalDomains" {
   type    = list(string)
   default = []
 }
+
+variable "enable_kubernetes_network_policies" {
+  type    = bool
+  default = false
+}
+
+variable "enable_cilium_network_policies" {
+  type    = bool
+  default = false
+}

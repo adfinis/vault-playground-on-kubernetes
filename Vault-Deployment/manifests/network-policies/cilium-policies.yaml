@@ -1,0 +1,4 @@
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+# TODO

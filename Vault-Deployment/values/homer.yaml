@@ -157,13 +157,13 @@ configmap:
             # logo: "path/to/logo"
             items:
               - name: "Vault UI"
-                logo: "https://vault-ui.playground.lab/ui/favicon-c02e22ca67f83a0fb6f2fd265074910a.png"
+                logo: "https://raw.githubusercontent.com/hashicorp/vault/main/ui/public/vault-logo.svg"
                 # Alternatively a fa icon can be provided:
                 # icon: "fab fa-jenkins"
                 # subtitle: "Bookmark example"
                 # tag: "app"
                 keywords: "vault"
-                url: "https://vault-ui.playground.lab/"
+                url: "https://vault.playground.lab/"
                 target: "_blank" # optional html tag target attribute
 
               - name: "Grafana"

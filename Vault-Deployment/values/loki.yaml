@@ -1,0 +1,16 @@
+---
+# https://grafana.com/docs/loki/latest/setup/install/helm/install-monolithic
+loki:
+  commonConfig:
+    replication_factor: 1
+  storage:
+    type: 'filesystem'
+  analytics:
+    reporting_enabled: false
+  # https://grafana.com/docs/loki/latest/operations/multi-tenancy
+  # Loki defaults to running in multi-tenant mode. Multi-tenant mode
+  # is set in the configuration with auth_enabled: true.
+  auth_enabled: true
+
+singleBinary:
+  replicas: 1
