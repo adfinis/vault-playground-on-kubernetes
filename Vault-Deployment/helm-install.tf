@@ -63,11 +63,13 @@ resource "kubernetes_secret" "prometheus-monitoring-token" {
 
 
 resource "helm_release" "prometheus-grafana" {
-  name       = "kube-stack-prometheus"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  chart      = "kube-prometheus-stack"
-  namespace  = var.namespace
-  version    = "44.2.1"
+  name             = "kube-stack-prometheus"
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  chart            = "kube-prometheus-stack"
+  create_namespace = true
+  namespace        = "kube-prometheus-stack"
+  version          = "55.0.0"
+  wait             = false
 
   values = [
     file("./values/kube-prometheus-stack-values.yaml")
@@ -84,6 +86,45 @@ resource "helm_release" "prometheus-grafana" {
   ]
 
 
+}
+
+resource "helm_release" "loki" {
+  name             = "loki"
+  repository       = "https://grafana.github.io/helm-charts"
+  chart            = "loki"
+  version          = "5.39.0"
+  create_namespace = true
+  namespace        = "loki"
+  wait             = false
+  values = [
+    file("./values/loki.yaml")
+  ]
+}
+
+resource "helm_release" "promtail" {
+  name             = "promtail"
+  repository       = "https://grafana.github.io/helm-charts"
+  chart            = "promtail"
+  version          = "6.15.3"
+  create_namespace = true
+  namespace        = "promtail"
+  wait             = false
+  values = [
+    file("./values/promtail.yaml")
+  ]
+}
+
+resource "helm_release" "opentelemetry-collector" {
+  name             = "opentelemetry-collector"
+  repository       = "https://open-telemetry.github.io/opentelemetry-helm-charts"
+  chart            = "opentelemetry-collector"
+  version          = "0.76.0"
+  create_namespace = true
+  namespace        = "otlp"
+  wait             = false
+  values = [
+    file("./values/otlp.yaml")
+  ]
 }
 
 

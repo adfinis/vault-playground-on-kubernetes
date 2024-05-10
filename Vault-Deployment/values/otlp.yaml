@@ -1,0 +1,42 @@
+---
+mode: "deployment"
+replicaCount: 1
+config:
+  receivers:
+    tcplog:
+      attributes:
+        # this attribute is processed below as loki label
+        application: vault
+      listen_address: "0.0.0.0:54525"
+  exporters:
+    loki:
+      endpoint: "http://loki.loki.svc.cluster.local:3100/loki/api/v1/push"
+      headers:
+      # Send everything to the vault-audit tenant_id
+      # https://grafana.com/docs/loki/latest/operations/multi-tenancy
+        "X-Scope-OrgID": vault-audit
+  processors:
+    attributes:
+      actions:
+        # set the attribute from the receiver as loki label
+        - action: insert
+          key: loki.attribute.labels
+          value: application
+    resource:
+      attributes:
+      # use raw format to enable json
+      - action: insert
+        key: loki.format
+        value: raw
+  service:
+    pipelines:
+      logs:
+        receivers: [tcplog]
+        processors: [attributes,resource]
+        exporters: [loki]
+ports:
+  tcplog:
+    enabled: true
+    containerPort: 54525
+    servicePort: 54525
+    protocol: TCP

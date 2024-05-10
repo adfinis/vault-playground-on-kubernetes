@@ -17,4 +17,7 @@ prometheus-vault-access-token = ""
 organizationName       = "TestOrg"
 organizationalUnitName = "Devops"
 commonName             = "vault-internal.svc.cluster.local"
-additionalDomains      = ["vault.cluster.local", "vault-cli.playground.lab", "vault-ui.playground.lab", "vault.default.svc.cluster.local", "vault-0.vault-internal", "vault-1.vault-internal", "vault-2.vault-internal"]
+additionalDomains      = ["vault.cluster.local", "vault.playground.lab", "vault.default.svc.cluster.local", "vault-0.vault-internal", "vault-1.vault-internal", "vault-2.vault-internal"]
+
+enable_kubernetes_network_policies = true
+enable_cilium_network_policies = false

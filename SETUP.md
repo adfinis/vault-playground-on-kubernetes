@@ -139,7 +139,9 @@ To install minikube, follow the [official documentation](https://minikube.sigs.k
 After installing minikube, you can create a cluster with the following command:
 
 ```bash
-minikube start
+# start minkube with network plugin to use network policies
+# https://kubernetes.io/docs/tasks/administer-cluster/network-policy-provider/cilium-network-policy
+minikube start --cni=cilium
 ```
 MiniKube will automatically configure kubectl to communicate with the cluster and offers commands to manage the cluster under the context `minikube`.
 

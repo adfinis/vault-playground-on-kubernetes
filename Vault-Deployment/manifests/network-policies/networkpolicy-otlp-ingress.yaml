@@ -1,0 +1,24 @@
+# https://kubernetes.io/docs/concepts/services-networking/network-policies
+# https://support.hashicorp.com/hc/en-us/articles/13444259109523-Information-in-regards-to-Audit-Log-when-running-Vault-in-Kubernetes
+#
+# Network policiy for controlling communication between Vault, OTLP/Promtail and Loki
+---
+# Only Vault can send tcp (audit log) data to OTLP Collector
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: otlp-allow-from-vault
+  namespace: otlp
+spec:
+  # An empty podSelector selects all pods in the namespace
+  podSelector: {}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: vault
+      ports:
+        - protocol: TCP
+          port: 54525
