@@ -11,6 +11,31 @@ loki:
   # Loki defaults to running in multi-tenant mode. Multi-tenant mode
   # is set in the configuration with auth_enabled: true.
   auth_enabled: true
-
+  rulerConfig:
+    storage:
+      type: local
+      local:
+        directory: /var/loki/rulestorage
+    rule_path: /var/loki/rules-temp
+    alertmanager_url: http://kube-stack-prometheus-kube-alertmanager.kube-prometheus-stack.svc.cluster.local:9093
+    ring:
+      kvstore:
+        store: inmemory
+    enable_api: true
+    # send data to local Prometheus
+    remote_write:
+      enabled: true
+      client:
+        url: http://kube-stack-prometheus-kube-prometheus.kube-prometheus-stack.svc.cluster.local:9090/api/v1/write
+    wal:
+      # https://github.com/grafana/loki/issues/7377
+      dir: /var/loki/ruler-wal
 singleBinary:
   replicas: 1
+  extraVolumeMounts:
+    - name: rules
+      mountPath: "/var/loki/rulestorage/vault-audit"
+  extraVolumes:
+    - name: rules
+      configMap:
+        name: loki-alerting-rules
