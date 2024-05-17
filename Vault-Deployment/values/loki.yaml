@@ -33,9 +33,9 @@ loki:
 singleBinary:
   replicas: 1
   extraVolumeMounts:
-    - name: rules
+    - name: loki-rules
       mountPath: "/var/loki/rulestorage/vault-audit"
   extraVolumes:
-    - name: rules
+    - name: loki-rules
       configMap:
         name: loki-alerting-rules

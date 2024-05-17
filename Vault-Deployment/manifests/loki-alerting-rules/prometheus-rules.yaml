@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-alerting-rules
+  namespace: kube-prometheus-stack
+data:
+  rules.yaml: |
+    groups:
+      - name: Requests
+        folder: Vault
+        interval: 1m
+        rules:
+            # uid required, but can be any uuid
+          - uid: 76e4fa8e-4367-4556-b76d-4d6253a3a820
+            title: Vault request rate
+            condition: A
+            data:
+              - refId: A
+                relativeTimeRange:
+                  from: 600
+                  to: 0
+                datasourceUid: prometheus
+                model:
+                  # reuse recording rule metric
+                  expr: sum(rate(vault:requests:rate1m[5m])) >= 0
+                  instant: true
+                  range: false
+                  refId: A
+            for: 5m

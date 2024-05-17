@@ -854,11 +854,11 @@ grafana:
         # datasourceUid: Jaeger
         # traceIdLabelName: trace_id
 
-  extraConfigmapMounts: []
-  # - name: certs-configmap
-  #   mountPath: /etc/grafana/ssl/
-  #   configMap: certs-configmap
-  #   readOnly: true
+  extraConfigmapMounts:
+  - name: prometheus-alerting-rules
+    mountPath: /etc/grafana/provisioning/alerting/
+    configMap: prometheus-alerting-rules
+    readOnly: true
 
   deleteDatasources: []
   # - name: example-datasource
