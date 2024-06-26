@@ -854,11 +854,11 @@ grafana:
         # datasourceUid: Jaeger
         # traceIdLabelName: trace_id
 
-  extraConfigmapMounts: []
-  # - name: certs-configmap
-  #   mountPath: /etc/grafana/ssl/
-  #   configMap: certs-configmap
-  #   readOnly: true
+  extraConfigmapMounts:
+  - name: prometheus-alerting-rules
+    mountPath: /etc/grafana/provisioning/alerting/
+    configMap: prometheus-alerting-rules
+    readOnly: true
 
   deleteDatasources: []
   # - name: example-datasource
@@ -2728,7 +2728,7 @@ prometheus:
 
     ## enable --web.enable-remote-write-receiver flag on prometheus-server
     ##
-    enableRemoteWriteReceiver: false
+    enableRemoteWriteReceiver: true
 
     ## Name of the external label used to denote replica name
     ##
