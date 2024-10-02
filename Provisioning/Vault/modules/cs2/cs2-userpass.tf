@@ -3,6 +3,14 @@ resource "vault_auth_backend" "cs2-userpass" {
   namespace = vault_namespace.cs2-ns1.path
 }
 
+resource "random_password" "password" {
+  length  = 12
+  special = false
+  upper   = false
+  lower   = true
+  number  = true
+}
+
 resource "vault_generic_endpoint" "cs2-u0" {
   depends_on           = [vault_auth_backend.cs2-userpass]
   path                 = "auth/userpass/users/alice"
@@ -12,7 +20,7 @@ resource "vault_generic_endpoint" "cs2-u0" {
   data_json = <<EOT
 {
   "policies": ["admin", "default"],
-  "password": "passworld123"
+  "password": "${random_password.password.result}"
 }
 EOT
 }
@@ -26,7 +34,7 @@ resource "vault_generic_endpoint" "cs2-u1" {
   data_json = <<EOT
 {
   "policies": ["kv-r", "default"],
-  "password": "passworld123"
+  "password": "${random_password.password.result}"
 }
 EOT
 }
@@ -41,7 +49,7 @@ resource "vault_generic_endpoint" "cs2-u2" {
   data_json = <<EOT
 {
   "policies": ["kv-rw", "default"],
-  "password": "passworld123"
+  "password": "${random_password.password.result}"
 }
 EOT
 }
@@ -55,7 +63,7 @@ resource "vault_generic_endpoint" "cs2-u3" {
   data_json = <<EOT
 {
   "policies": ["default"],
-  "password": "passworld123"
+  "password": "${random_password.password.result}"
 }
 EOT
 }
